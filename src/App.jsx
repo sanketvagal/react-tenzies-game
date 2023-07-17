@@ -19,7 +19,13 @@ export default function App() {
   }
 
   function rollDice() {
-    setDice(allNewDice())
+    setDice(oldDice => oldDice.map(die => {
+      if (!die.isHeld) {
+        return { ...die, value: Math.ceil(Math.random() * 6) }
+      } else {
+        return die
+      }
+    }))
   }
 
   function holdDice(id) {
