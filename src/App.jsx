@@ -9,6 +9,8 @@ export default function App() {
 
   const [tenzies, setTenzies] = React.useState(false)
 
+  const [rolls, setRolls] = React.useState(0)
+
   React.useEffect(() => {
     const allHeld = dice.every(die => die.isHeld)
     const allSameVal = dice.every(die => die.value === dice[0].value)
@@ -34,6 +36,7 @@ export default function App() {
   }
 
   function rollDice() {
+    setRolls(prevRoll => prevRoll + 1)
     setDice(oldDice => oldDice.map(die => {
       if (!die.isHeld) {
         return { ...die, value: Math.ceil(Math.random() * 6) }
@@ -55,6 +58,7 @@ export default function App() {
 
   function newGame() {
     setTenzies(false)
+    setRolls(0)
     setDice(allNewDice())
   }
 
@@ -70,6 +74,7 @@ export default function App() {
       <div className="dice-container">
         {diceElements}
       </div>
+      <h3>Rolls:{rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
     </main>
   )
