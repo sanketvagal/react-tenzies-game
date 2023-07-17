@@ -17,14 +17,18 @@ export default function App() {
     }
   }, [dice])
 
+  function generateNewDie() {
+    return {
+      value: Math.ceil(Math.random() * 6),
+      isHeld: false,
+      id: nanoid()
+    }
+  }
+
   function allNewDice() {
     const newDice = []
     for (let i = 0; i < 10; i++) {
-      newDice.push({
-        value: Math.ceil(Math.random() * 6),
-        isHeld: false,
-        id: nanoid()
-      })
+      newDice.push(generateNewDie())
     }
     return newDice
   }
@@ -49,6 +53,11 @@ export default function App() {
     }))
   }
 
+  function newGame() {
+    setTenzies(false)
+    setDice(allNewDice())
+  }
+
   const diceElements = dice.map(die => (
     <Die key={die.id} value={die.value} isHeld={die.isHeld} holdDice={() => holdDice(die.id)} />
   ))
@@ -61,7 +70,7 @@ export default function App() {
       <div className="dice-container">
         {diceElements}
       </div>
-      <button className="roll-dice" onClick={rollDice}>{tenzies ? "New Game" : "Roll"}</button>
+      <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
     </main>
   )
 }
