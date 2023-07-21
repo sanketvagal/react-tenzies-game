@@ -118,8 +118,7 @@ export default function App() {
       </div>
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
-      <h3>Current time:<Timer time={time} /></h3>
-      <h3>Best time: <Timer time={bestTime} /></h3>
+      <h3>Current time:<Timer time={time} /> Best time: <Timer time={bestTime} /></h3>
     </main>
   )
 }
