@@ -12,6 +12,9 @@ export default function App() {
 
   const [time, setTime] = React.useState(0);
   const [running, setRunning] = React.useState(false);
+  const [bestTime, setBestTime] = React.useState(
+    JSON.parse(localStorage.getItem("bestTime")) || 9999999999
+  );
 
   React.useEffect(() => {
     let interval;
@@ -45,6 +48,13 @@ export default function App() {
     if (allHeld && allSameVal) {
       setTenzies(true)
       handleStop()
+      console.log(bestTime)
+      console.log(time)
+      if (bestTime > time) {
+        setBestTime(time);
+        localStorage.setItem("bestTime", JSON.stringify(time));
+      }
+
     }
   }, [dice])
 
@@ -109,6 +119,7 @@ export default function App() {
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
       <h3>Current time:<Timer time={time} /></h3>
+      <h3>Best time: <Timer time={bestTime} /></h3>
     </main>
   )
 }
