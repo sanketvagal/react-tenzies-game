@@ -2,20 +2,49 @@ import React from "react"
 import Die from "./Die"
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
+import Timer from "./Timer"
 
 export default function App() {
 
   const [dice, setDice] = React.useState(allNewDice())
-
   const [tenzies, setTenzies] = React.useState(false)
-
   const [rolls, setRolls] = React.useState(0)
+
+  const [time, setTime] = React.useState(0);
+  const [running, setRunning] = React.useState(false);
+
+  React.useEffect(() => {
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
+
+  const handleStart = () => {
+    setRunning(true);
+  };
+
+  const handleStop = () => {
+    setRunning(false);
+  };
+
+  const handleReset = () => {
+    setTime(0);
+    setRunning(false);
+  };
+
 
   React.useEffect(() => {
     const allHeld = dice.every(die => die.isHeld)
     const allSameVal = dice.every(die => die.value === dice[0].value)
     if (allHeld && allSameVal) {
       setTenzies(true)
+      handleStop()
     }
   }, [dice])
 
@@ -36,6 +65,7 @@ export default function App() {
   }
 
   function rollDice() {
+    rolls === 0 && handleStart()
     setRolls(prevRoll => prevRoll + 1)
     setDice(oldDice => oldDice.map(die => {
       if (!die.isHeld) {
@@ -47,6 +77,7 @@ export default function App() {
   }
 
   function holdDice(id) {
+    rolls === 0 && handleStart()
     setDice(oldDice => oldDice.map(die => {
       if (die.id === id) {
         return { ...die, isHeld: !die.isHeld }
@@ -60,6 +91,7 @@ export default function App() {
     setTenzies(false)
     setRolls(0)
     setDice(allNewDice())
+    handleReset()
   }
 
   const diceElements = dice.map(die => (
@@ -76,6 +108,7 @@ export default function App() {
       </div>
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
+      <h3>Current time:<Timer time={time} /></h3>
     </main>
   )
 }
