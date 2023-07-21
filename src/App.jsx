@@ -48,8 +48,6 @@ export default function App() {
     if (allHeld && allSameVal) {
       setTenzies(true)
       handleStop()
-      console.log(bestTime)
-      console.log(time)
       if (bestTime > time) {
         setBestTime(time);
         localStorage.setItem("bestTime", JSON.stringify(time));
@@ -118,7 +116,10 @@ export default function App() {
       </div>
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
-      <h3>Current time:<Timer time={time} /> Best time: <Timer time={bestTime} /></h3>
+      <h3>
+        <span>Current time: <Timer time={time} /></span>
+        <span>Best time: <Timer time={bestTime} /></span>
+      </h3>
     </main>
   )
 }
