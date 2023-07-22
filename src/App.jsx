@@ -1,8 +1,8 @@
 import React from "react"
-import Die from "./Die"
+import Die from "./components/Die"
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
-import Timer from "./Timer"
+import Timer from "./components/Timer"
 
 export default function App() {
 
@@ -116,10 +116,14 @@ export default function App() {
       </div>
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
-      <h3>
-        <span>Current time: <Timer time={time} /></span>
-        <span>Best time: <Timer time={bestTime} /></span>
-      </h3>
-    </main>
+      <div style={{ display: "inline-flex" }}>
+        <div style={{ minWidth: "180px", marginRight: "20px" }}>
+          Current time: <Timer time={time} />
+        </div>
+        <div style={{ minWidth: "180px" }}>
+          Best time: <Timer time={bestTime} />
+        </div>
+      </div>
+    </main >
   )
 }
