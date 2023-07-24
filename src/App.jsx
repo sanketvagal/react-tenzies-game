@@ -116,13 +116,13 @@ export default function App() {
       </div>
       <h3>Rolls: {rolls}</h3>
       <button className="roll-dice" onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}</button>
-      <div style={{ display: "inline-flex" }}>
-        <div style={{ minWidth: "180px", marginRight: "20px" }}>
+      <div>
+        <span style={{ minWidth: "180px", marginRight: "20px" }}>
           Current time: <Timer time={time} />
-        </div>
-        <div style={{ minWidth: "180px" }}>
+        </span>
+        <span style={{ minWidth: "180px" }}>
           Best time: <Timer time={bestTime} />
-        </div>
+        </span>
       </div>
     </main >
   )
